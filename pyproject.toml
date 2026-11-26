@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "smilebot"
+version = "0.1.0"
+description = "Telegram bot that watches seat availability on smilebus.by"
+authors = ["Anton <apodvalnikov@softeqlab.com>"]
+readme = "README.md"
+packages = [{ include = "smilebot" }]
+
+[tool.poetry.dependencies]
+python = "^3.12"
+aiogram = "^3.13"
+aiohttp = "^3.10"
+psycopg = { extras = ["binary", "pool"], version = "^3.2" }
+pydantic-settings = "^2.5"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.0"
+pytest-asyncio = ">=0.24"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
