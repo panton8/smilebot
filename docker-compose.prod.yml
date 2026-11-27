@@ -1,0 +1,12 @@
+# Production stack: bot only, database is external (Neon).
+# DB_DSN must be set in the .env on the server, e.g.:
+#   DB_DSN=postgresql://user:pass@ep-xxx.neon.tech/neondb?sslmode=require
+#
+# Usage: docker compose -f docker-compose.prod.yml up -d --build
+
+services:
+  bot:
+    build: .
+    env_file:
+      - .env
+    restart: unless-stopped

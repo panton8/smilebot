@@ -1,0 +1,33 @@
+# Git / IDE
+.git
+.gitignore
+.idea
+.vscode
+
+# Secrets — must never reach the image
+.env
+.env.*
+
+# Python caches / virtualenvs
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# Tests / linters
+tests/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+htmlcov/
+.coverage
+
+# Docker / local data
+pgdata/
+docker-compose*.yml
+Dockerfile
+.dockerignore
+
+# Docs
+README.md

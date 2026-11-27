@@ -1,0 +1,39 @@
+# Development stack: bot + local PostgreSQL.
+# Usage: docker compose up --build
+#
+# DB_DSN is overridden here on purpose: inside the compose network the database
+# host is the "postgres" service, not localhost. The DSN from .env (e.g. Neon)
+# is only used in production (docker-compose.prod.yml).
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: smilebot
+      POSTGRES_PASSWORD: smilebot
+      POSTGRES_DB: smilebot
+    ports:
+      # Host port 5432 is busy, so expose the container on 5433 for local tools.
+      - "5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U smilebot -d smilebot"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    restart: unless-stopped
+
+  bot:
+    build: .
+    env_file:
+      - .env
+    environment:
+      DB_DSN: postgresql://smilebot:smilebot@postgres:5432/smilebot
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  pgdata:
